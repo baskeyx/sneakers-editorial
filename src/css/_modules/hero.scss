@@ -1,0 +1,45 @@
+.ed--module-hero {
+    display: flex !important;
+    flex-direction: row-reverse;
+    position: relative;
+    align-items:center;
+    justify-content: space-between;
+
+    @media only screen and (max-width: 767px) {
+        & {
+            display: block !important;
+        }
+    }
+
+    .ed--module-hero-image {
+        width: 100%;
+        padding-bottom: 60%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @media only screen and (max-width: 767px) {
+            & {
+                margin-bottom:35px;
+            }
+        }
+    }
+
+    .col {
+        width:50%;
+
+        &.left-col {
+            padding-right:20px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            & {
+                width:100%;
+                text-align: center;
+                padding:0;
+            }
+        }
+    }
+
+
+}

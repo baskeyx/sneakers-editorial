@@ -1,0 +1,29 @@
+[
+  {
+    "version": "en",
+    "hero_title": "Design your <br>own shoes",
+    "hero_desc": "Ever fancied yourself a shoe designer? Now you can be, thanks to Farfetch's exclusive customisation service using state of the art 3D modelling technology. Creative juices flowing? Scroll down to get started.",
+    "cta_women": "Customise Womens",
+    "cta_men": "Customise Mens",
+    "cta_style": "Customise this style",
+    "cta_shopwomen": "Shop All Womens Customisable",
+    "cta_shopmen": "Shop All Mens Customisable",
+    "pick_her_title":"Top picks for her",
+    "pick_her_desc":"With so many customisable shoes to choose from, it’s easy to suffer from choice paralysis. So, where to start? Here are our most-clicked women’s customisables.",
+    "pick_him_title":"Top picks for him",
+    "pick_him_desc":"13 customisable styles, 100s of possibilities. Need inspiration? We’ve picked the best below.",
+    "shop_designer_title": "Shop by designer",
+    "shop_designer_desc": "Swear fan? Dorateymur devotee? Choose a style from these designers, pick your materials and there you have it - your dream shoe.",
+    "shop_trend_title": "Shop by trend",
+    "shop_trend_her_desc": "Designing your own shoes is a great way to tap into the buzziest trends, while avoiding running the dreaded same shoe risk. Whether you’re into high-tech sneakers or mules, stand out below…",
+    "shop_trend_him_desc": "We get it, you’re either a high top or a low top kind of guy. Shop by trend below…",
+    "product_grid_1_1_title": "Sneakers",
+    "product_grid_1_2_title": "Loafers",
+    "product_grid_1_3_title": "Mules",
+    "product_grid_1_4_title": "Embellished",
+    "product_grid_2_1_title": "Slip Ons",
+    "product_grid_2_2_title": "Low Tops",
+    "product_grid_2_3_title": "High Tops",
+    "product_grid_2_4_title": "Tech Trainers"
+  }
+]

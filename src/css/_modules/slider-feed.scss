@@ -1,0 +1,84 @@
+.ed--module-slider-feed {
+    text-align: center;
+
+    .desc {
+        max-width: 640px;
+        margin:0 auto;
+        margin-bottom: 30px;
+    }
+
+    .swiper-wrapper {
+        min-height:300px;
+    }
+
+    .swiper-slide {
+        width: 33.3333%;
+        @media only screen and (max-width: 767px) {
+            & {
+                width: 100%;
+            }
+        }
+    }
+
+    .slideImage {
+        width:100%;
+        padding-bottom:70%;
+        background-size:75% auto;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @media only screen and (max-width: 767px) {
+            & {
+                padding-bottom:80%;
+                background-size:90% auto;
+            }
+        }
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        background-image: none;
+        svg {
+            width:100%;
+            height: auto;
+        }
+        transition: opacity 0.2s ease-out;
+
+        &:hover {
+            opacity: 0.6;
+        }
+        @media only screen and (max-width: 767px) {
+            & {
+                display: none;
+            }
+        }
+    }
+
+    .swiper-button-next {
+        right:0;
+    }
+
+    .swiper-button-prev {
+        left:0;
+    }
+
+    .swiper-pagination {
+        position: relative;
+        margin-top:30px;
+        display: none;
+
+        @media only screen and (max-width: 767px) {
+            & {
+                display: block;
+            }
+        }
+    }
+
+    .swiper-pagination-bullet {
+        width:10px;
+        height:10px;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: black;
+    }
+}

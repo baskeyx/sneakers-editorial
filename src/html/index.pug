@@ -1,0 +1,101 @@
+main.ed--main
+    //- Hero
+    section.ed--module.ed--module-hero
+        .col.right-col
+            .ed--module-hero-image(style="background-image:url('https://cdn-images.farfetch-contents.com/13/26/86/04/13268604_15130868_1000.jpg')")
+        .col.left-col
+            .title
+                h1.bold.center !{hero_title}
+            .desc
+                p !{hero_desc}
+            .cta-row
+                a(href="#top-picks-women")
+                    button.button-black
+                        span.btn-text !{cta_women}
+                a(href="#top-picks-men")
+                    button.button-black
+                        span.btn-text !{cta_men}
+                #top-picks-women
+
+    //- Arrow Divider
+    .arrow-divider
+        <svg version="1.1" x="0px" y="0px" width="56.3px" height="28.1px" viewBox="0 0 56.3 28.1" style="enable-background:new 0 0 56.3 28.1;" xml:space="preserve"><polygon points="50.6,0 28.1,22.5 5.7,0 0,0 28.1,28.1 56.3,0 "/></svg>
+
+    //- Product Feed on Slider
+    section.ed--module.ed--module-slider-feed
+        .title
+            h2.bold.center !{pick_her_title}
+        .desc
+            p !{pick_her_desc}
+        .ed--module-slider-holder(data-items="6" data-itemcta=`${cta_style}` data-feed=`${feedPath}`+'/shopping/women/trainers-1/items.aspx?format=json')
+        .swiper-container
+            .swiper-wrapper
+            .swiper-pagination
+            .swiper-button-next
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><defs></defs><polygon points="0,5.7 22.5,28.1 0,50.6 0,56.3 28.1,28.1 0,0 "/></svg>
+            .swiper-button-prev
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><polygon points="28.1,50.6 5.7,28.1 28.1,5.7 28.1,0 0,28.1 28.1,56.3 "/></svg>
+
+    //- Product Grid
+    section.ed--module.ed--module-product-grid
+        .title
+            h2.bold.center !{shop_trend_title}
+        .desc
+            p !{shop_trend_her_desc}
+        .gridHolder
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_1_title}` data-feed=`${feedPath}`+'/shopping/women/trainers-1/items.aspx?format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_2_title}` data-feed=`${feedPath}`+'/shopping/women/loafers-1/items.aspx?format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_3_title}` data-feed=`${feedPath}`+'/shopping/women/mules-1/items.aspx?format=json')
+            .ed--module-category-single.tall(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_4_title}` data-feed=`${feedPath}`+'/shopping/women/boots-1/items.aspx?view=180&scale=274&designer=3680256&format=json')
+
+    //- Product Feed on Slider (no product desc)
+    section.ed--module.ed--module-slider-feed
+        .title
+            h2.bold.center !{shop_designer_title}
+        .desc
+            p !{shop_designer_desc}
+        .ed--module-slider-holder(data-items="6" data-itemcta=`${cta_style}` data-includedesc="no" data-feed=`${feedPath}`+'/shopping/women/shoes-1/items.aspx?designer=97&format=json')
+        .swiper-container
+            .swiper-wrapper
+            .swiper-pagination
+            .swiper-button-next
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><defs></defs><polygon points="0,5.7 22.5,28.1 0,50.6 0,56.3 28.1,28.1 0,0 "/></svg>
+            .swiper-button-prev
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><polygon points="28.1,50.6 5.7,28.1 28.1,5.7 28.1,0 0,28.1 28.1,56.3 "/></svg>
+        .cta-row
+            #top-picks-men
+            a(href="#")
+                button.button-black
+                    span.btn-text !{cta_shopwomen}
+
+    //- Product Feed on Slider
+    section.ed--module.ed--module-slider-feed
+        .title
+            h2.bold.center !{pick_him_title}
+        .desc
+            p !{pick_him_desc}
+        .ed--module-slider-holder(data-items="6" data-itemcta=`${cta_style}` data-feed=`${feedPath}`+'/shopping/men/trainers-1/items.aspx?format=json')
+        .swiper-container
+            .swiper-wrapper
+            .swiper-pagination
+            .swiper-button-next
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><defs></defs><polygon points="0,5.7 22.5,28.1 0,50.6 0,56.3 28.1,28.1 0,0 "/></svg>
+            .swiper-button-prev
+                <svg version="1.1" x="0px" y="0px" width="28.1px" height="56.3px" viewBox="0 0 28.1 56.3" style="enable-background:new 0 0 28.1 56.3;" xml:space="preserve"><polygon points="28.1,50.6 5.7,28.1 28.1,5.7 28.1,0 0,28.1 28.1,56.3 "/></svg>
+
+    //- Product Grid
+    section.ed--module.ed--module-product-grid
+        .title
+            h2.bold.center !{shop_trend_title}
+        .desc
+            p !{shop_trend_him_desc}
+        .gridHolder
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_2_1_title}` data-feed=`${feedPath}`+'/shopping/men/slippers-2/items.aspx?format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_2_2_title}` data-feed=`${feedPath}`+'/shopping/men/trainers-2/items.aspx?view=180&scale=282&category=136361&format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_2_3_title}` data-feed=`${feedPath}`+'/shopping/men/trainers-2/items.aspx?view=180&scale=282&category=136489&format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_2_4_title}` data-feed=`${feedPath}`+'/shopping/men/trainers-2/items.aspx?format=json')
+        .cta-row
+            a(href="#")
+                button.button-black
+                    span.btn-text !{cta_shopmen}
+
