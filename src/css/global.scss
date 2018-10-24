@@ -124,6 +124,9 @@
 
     button {
         text-transform: uppercase;
-        white-space: nowrap;
+        // white-space: nowrap;
+        span {
+            line-height: 1.4;
+        }
     }
 }
