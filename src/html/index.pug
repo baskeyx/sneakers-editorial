@@ -48,13 +48,13 @@ main.ed--main
             .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_3_title}` data-feed=`${feedPath}`+'/shopping/women/mules-1/items.aspx?format=json')
             .ed--module-category-single.tall(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_4_title}` data-feed=`${feedPath}`+'/shopping/women/boots-1/items.aspx?view=180&scale=274&designer=3680256&format=json')
 
-    //- Product Feed on Slider (no product desc)
-    section.ed--module.ed--module-slider-feed
+    //- Product Feed on Slider (no product desc; multiFeed variant, multiFeed class is needed!, no need to define data-items number)
+    section.ed--module.ed--module-slider-feed.multiFeed
         .title
             h2.bold.center !{shop_designer_title}
         .desc
             p !{shop_designer_desc}
-        .ed--module-slider-holder(data-items="6" data-itemcta=`${cta_style}` data-includedesc="no" data-feed=`${feedPath}`+'/shopping/women/shoes-1/items.aspx?designer=97&format=json')
+        .ed--module-slider-holder(data-itemcta=`${cta_style}` data-includedesc="no" data-feed='["'+`${feedPath}`+'/shopping/women/designer-swear/items.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/dorateymur-custom-styles.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/customizable-NK-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/sergio-rossi-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/toga-pulla-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/paul-andrew-women-custom-styles.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/emilio-pucci-cityup-sneakers.aspx?format=json'+'"]')
         .swiper-container
             .swiper-wrapper
             .swiper-pagination

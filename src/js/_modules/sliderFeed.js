@@ -16,16 +16,31 @@ var SliderFeed = function($target) {
     self.$slidesHolder = self.$el.querySelector('.swiper-wrapper');
     self.$products = [];
 
-    // get feed
-    getFeed(self.$feedUrl).then(function(response) {
-        //console.log(response);
-        // grab the specified amount of items from the response, then init the swiper
-        self.$products = response.Products.List.slice(0,self.$itemCount);
-        self.initSwiper(self.$products);
-
-    }, function(error) {
-        console.error(error);
-    });
+    if (self.$el.classList.contains('multiFeed')){
+        // if it's multifeed and an array of feeds has been set
+        self.feedArray = JSON.parse(self.$feedUrl);
+        self.feedArray.forEach(function(itemUrl,i){
+            getFeed(itemUrl).then(function(response) {
+                var item = response.Products.List.slice(0,1);
+                self.$products.push(item[0]);
+                if (self.$products.length === self.feedArray.length) {
+                    // if all the items have been added to the products array, init the swiper
+                    self.initSwiper(self.$products);
+                }
+            }, function(error) {
+                console.error(error);
+            });
+        })
+    } else {
+        // get feed
+        getFeed(self.$feedUrl).then(function(response) {
+            // grab the specified amount of items from the response, then init the swiper
+            self.$products = response.Products.List.slice(0,self.$itemCount);
+            self.initSwiper(self.$products);
+        }, function(error) {
+            console.error(error);
+        });
+    }
 }
 
 SliderFeed.prototype.initSwiper = function($items){
