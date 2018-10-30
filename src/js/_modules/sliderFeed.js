@@ -65,7 +65,7 @@ SliderFeed.prototype.initSwiper = function($items){
             var itemBrand = document.createElement('h3');
             itemBrand.className = 'itemBrand';
         } else {
-            var itemBrand = document.createElement('h2');
+            var itemBrand = document.createElement('h3');
             itemBrand.className = 'itemBrand styled';
         }
         itemBrand.innerHTML = item.DesignerName;
