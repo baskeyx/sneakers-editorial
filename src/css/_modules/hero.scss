@@ -4,9 +4,11 @@
     position: relative;
     align-items:center;
     justify-content: space-between;
+    padding:60px;
 
     @media only screen and (max-width: 767px) {
         & {
+            padding: 30px;
             display: block !important;
         }
     }
