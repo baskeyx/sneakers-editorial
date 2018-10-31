@@ -36,17 +36,6 @@ main.ed--main
             .swiper-button-prev
                 <svg version="1.1" x="0px" y="0px" width="28px" height="49.03px" viewBox="0 0 28 49.03" style="enable-background:new 0 0 28 49.03;" xml:space="preserve"><style type="text/css">.st0{fill:#222222;}</style><defs></defs><path id="Path_2_1_" class="st0" d="M10.18,24.51L27.01,6.28c1.4-1.52,1.31-3.88-0.21-5.28c-1.52-1.4-3.88-1.31-5.28,0.21L0,24.51l21.51,23.31c1.4,1.52,3.77,1.61,5.28,0.21c1.52-1.4,1.61-3.77,0.21-5.28L10.18,24.51z"/></svg>
 
-    //- Product Grid
-    section.ed--module.ed--module-product-grid
-        .title
-            h2.sectionTitle.center !{shop_trend_title}
-        .desc
-            p !{shop_trend_her_desc}
-        .gridHolder
-            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_1_title}` data-feed=`${feedPath}`+'/sets/women/custom-sneakers-for-women.aspx?format=json')
-            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_2_title}` data-feed=`${feedPath}`+'/sets/women/custom-loafers-for-women.aspx?format=json')
-            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_3_title}` data-feed=`${feedPath}`+'/sets/women/custom-mules-for-women.aspx?format=json')
-            .ed--module-category-single.tall(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_4_title}` data-feed=`${feedPath}`+'/sets/women/custom-boots-for-women.aspx?format=json')
 
     //- Product Feed on Slider (no product desc; multiFeed variant, multiFeed class is needed!, no need to define data-items number)
     section.ed--module.ed--module-slider-feed.multiFeed
@@ -62,11 +51,25 @@ main.ed--main
                 <svg version="1.1" x="0px" y="0px" width="28px" height="49.03px" viewBox="0 0 28 49.03" style="enable-background:new 0 0 28 49.03;" xml:space="preserve"><style type="text/css">.st0{fill:#222222;}</style><defs></defs><path id="Path_2_1_" class="st0" d="M0.99,42.75c-1.4,1.52-1.31,3.88,0.21,5.28c1.52,1.4,3.88,1.31,5.28-0.21L28,24.51L6.49,1.2C5.09-0.31,2.72-0.41,1.2,0.99s-1.61,3.77-0.21,5.28l16.83,18.24L0.99,42.75z"/></svg>
             .swiper-button-prev
                 <svg version="1.1" x="0px" y="0px" width="28px" height="49.03px" viewBox="0 0 28 49.03" style="enable-background:new 0 0 28 49.03;" xml:space="preserve"><style type="text/css">.st0{fill:#222222;}</style><defs></defs><path id="Path_2_1_" class="st0" d="M10.18,24.51L27.01,6.28c1.4-1.52,1.31-3.88-0.21-5.28c-1.52-1.4-3.88-1.31-5.28,0.21L0,24.51l21.51,23.31c1.4,1.52,3.77,1.61,5.28,0.21c1.52-1.4,1.61-3.77,0.21-5.28L10.18,24.51z"/></svg>
+
+
+    //- Product Grid
+    section.ed--module.ed--module-product-grid
+        .title
+            h2.sectionTitle.center !{shop_trend_title}
+        .desc
+            p !{shop_trend_her_desc}
+        .gridHolder
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_1_title}` data-feed=`${feedPath}`+'/sets/women/custom-sneakers-for-women.aspx?format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_2_title}` data-feed=`${feedPath}`+'/sets/women/custom-loafers-for-women.aspx?format=json')
+            .ed--module-category-single(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_3_title}` data-feed=`${feedPath}`+'/sets/women/custom-mules-for-women.aspx?format=json')
+            .ed--module-category-single.tall(data-itemcta=`${cta_style}` data-titlecat=`${product_grid_1_4_title}` data-feed=`${feedPath}`+'/sets/women/custom-boots-for-women.aspx?format=json')
         .cta-row
             #top-picks-men
             a(href="#")
                 button.button-black
                     span.btn-text !{cta_shopwomen}
+
 
     //- Product Feed on Slider
     section.ed--module.ed--module-slider-feed

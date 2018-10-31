@@ -29,6 +29,7 @@
         font-size: 40px;
         line-height: 1.15;
         margin-bottom: 30px;
+        margin-top:30px;
 
         @media only screen and (max-width: 767px) {
             & {
@@ -73,7 +74,7 @@
 .ed--module {
     width: 100%;
     max-width: 1440px;
-    padding:30px;
+    padding:22px;
     margin:0 auto !important;
     display: block;
 
@@ -101,6 +102,9 @@
     position: relative;
     text-align: center;
     //margin: 20px 0 20px;
+    svg {
+        max-width:20px;
+    }
     @media only screen and (max-width: 767px) {
         & {
             //margin:0 0 40px 0;
@@ -138,10 +142,21 @@
 }
 
 .swiper-button-next, .swiper-button-prev {
-    width:18px;
+    width:11px;
 
     svg {
         width:100%;
         height:auto;
+        max-width:11px;
     }
+}
+
+.swiper-button-next {
+    left:auto;
+    right:15px !important;
+}
+
+.swiper-button-prev {
+    right:auto;
+    left:15px !important;
 }
