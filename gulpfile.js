@@ -140,6 +140,10 @@ function getFilesFromPath(path, extension) {
     return dir.filter( elm => elm.match(new RegExp(`.*\.(${extension})`, 'ig')));
 }
 
+function getElementsByText(str, tag = 'a') {
+  return Array.prototype.slice.call(document.getElementsByTagName(tag)).filter(el => el.textContent.trim() === str.trim());
+}
+
 gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','assets','javascript','sass')),function(done){
 
   var cssFile = './dist/css/global.css';
@@ -159,17 +163,39 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     await page.click('#password');
     await page.keyboard.type(CREDS.password);
     await page.click('.FF-button');
+    await page.waitFor(3000);
+
+
+    /*const rows = await page.evaluate(() => Array.from(document.querySelectorAll('[data-tstid="content-segment-description"]')));*/
+
+    let rows = await page.$$('[data-tstid="content-segment-description"]');
+    for (let row in rows){
+      let text = await page.evaluate(el => el.textContent, row)
+      console.log(text)
+    }
+
+    // await console.log(rows[0])
+
+    /*await rows.forEach(function(el){
+      if (el.innerText === 'CMS_US') {
+        console.log(el.innerText)
+      }
+    })*/
+
+
 
     // on deployment page, after login
-    await page.waitFor(2000);
+
     await htmlFiles.forEach(function(el){
-      // for each translation, perform deployment routine
-      var version = el.toString();
-      version = version.replace('index_','').replace('.html','');
-      await page.waitFor(2000);
+      (async () => {
+        // for each translation, perform deployment routine
+        var version = el.toString();
+        version = version.replace('index_','').replace('.html','');
+        await page.waitFor(2000);
 
 
 
+      })
 
     })
 
@@ -177,8 +203,8 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     // await browser.close();
 
     // exit terminal process
-    await done();
-    await process.exit(0);
+    /*await done();
+    await process.exit(0);*/
 
   })();
 
