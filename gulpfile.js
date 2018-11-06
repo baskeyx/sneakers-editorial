@@ -21,6 +21,7 @@ var assign = require('lodash.assign');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var rename = require('gulp-rename');
+var puppeteer = require('puppeteer');
 
 // browserify
 var customOpts = {
@@ -130,4 +131,49 @@ gulp.task('build', gulp.series( gulp.series('clean', gulp.series('html-dist','as
   done()
   // exit terminal process
   return process.exit(0);
+}));
+
+
+// deploy build
+function getFilesFromPath(path, extension) {
+    let dir = fs.readdirSync( path );
+    return dir.filter( elm => elm.match(new RegExp(`.*\.(${extension})`, 'ig')));
+}
+
+gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','assets','javascript','sass')),function(done){
+
+  var cssFile = './dist/css/global.css';
+  var jsFile = './dist/js/main.js';
+  var htmlFiles = getFilesFromPath('./dist', '.html')
+
+  console.log(htmlFiles)
+
+  var CREDS = require('./deploy_creds');
+
+  (async () => {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.goto(CREDS.deploy_url);
+    await page.waitFor(2000);
+
+    // login
+    await page.click('#username');
+    await page.keyboard.type(CREDS.username);
+    await page.click('#password');
+    await page.keyboard.type(CREDS.password);
+    await page.click('.FF-button');
+
+    // on deployment page, after login
+    await page.waitFor(2000);
+
+    // when done - confirmation messsage and close browser
+    // await browser.close();
+
+    // exit terminal process
+    // await done();
+    // await process.exit(0);
+
+  })();
+
+
 }));
