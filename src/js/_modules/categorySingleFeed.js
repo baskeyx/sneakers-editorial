@@ -42,7 +42,8 @@ CategorySingleFeed.prototype.buildItem = function($product) {
     var itemLink = document.createElement('a');
     itemLink.className = 'itemLink bold';
     itemLink.innerHTML = self.$ctaText;
-    itemLink.href = self.$feedUrl.replace('?format=json','').replace('&format=json','');
+    itemLink.href = self.$feedUrl.replace('?format=json','').replace('&format=json','') + '?from=sneakers-editorial';
+    itemLink.dataset.ffref = 'sneakerseditorial';
     itemContentHolder.append(itemLink);
 
     self.$el.append(itemContentHolder)

@@ -81,7 +81,8 @@ SliderFeed.prototype.initSwiper = function($items){
         var itemLink = document.createElement('a');
         itemLink.className = 'itemLink bold';
         itemLink.innerHTML = self.$ctaText;
-        itemLink.href = item.ProductUrl;
+        itemLink.href = item.ProductUrl + '?from=sneakers-editorial';
+        itemLink.dataset.ffref = 'sneakerseditorial';
         slide.append(itemLink);
 
         self.$slidesHolder.append(slide)
