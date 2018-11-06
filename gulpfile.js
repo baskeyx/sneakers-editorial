@@ -168,11 +168,14 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
 
     /*const rows = await page.evaluate(() => Array.from(document.querySelectorAll('[data-tstid="content-segment-description"]')));*/
 
-    let rows = await page.$$('[data-tstid="content-segment-description"]');
+   /* let rows = await page.$$eval('[data-tstid="content-segment-description"]');
     for (let row in rows){
       let text = await page.evaluate(el => el.textContent, row)
       console.log(text)
     }
+*/
+    const ele = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
+    await console.log(ele)
 
     // await console.log(rows[0])
 
