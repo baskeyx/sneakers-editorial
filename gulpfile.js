@@ -145,9 +145,6 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
   var cssFile = './dist/css/global.css';
   var jsFile = './dist/js/main.js';
   var htmlFiles = getFilesFromPath('./dist', '.html')
-
-  console.log(htmlFiles)
-
   var CREDS = require('./deploy_creds');
 
   (async () => {
@@ -165,13 +162,23 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
 
     // on deployment page, after login
     await page.waitFor(2000);
+    await htmlFiles.forEach(function(el){
+      // for each translation, perform deployment routine
+      var version = el.toString();
+      version = version.replace('index_','').replace('.html','');
+      await page.waitFor(2000);
+
+
+
+
+    })
 
     // when done - confirmation messsage and close browser
     // await browser.close();
 
     // exit terminal process
-    // await done();
-    // await process.exit(0);
+    await done();
+    await process.exit(0);
 
   })();
 
