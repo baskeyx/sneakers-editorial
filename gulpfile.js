@@ -174,8 +174,22 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
       console.log(text)
     }
 */
-    const ele = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
-    await console.log(ele)
+    // const startingCell = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
+    // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/..");
+    const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/..").then(function(result){//cc[../bb='zz']"
+      console.log(result)
+    }); // this works
+    await page.waitFor(1000);
+    //await console.log(startingRow)
+
+    /*const copyButton = await startingRow.$('a.btn-info').then(function(result){
+        console.log(result);
+        result.click();
+      }).catch( e => {
+        console.log('XPath Error', e)
+      });
+    await page.waitFor(1000);*/
+
 
     // await console.log(rows[0])
 
