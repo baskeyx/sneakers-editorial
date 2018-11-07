@@ -175,7 +175,7 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/.."); // parent
 
     // for each translation, perform deployment routine
-    const createSegments = async () => {
+    /*const createSegments = async () => {
       await asyncForEach(htmlFiles, async (el,i) => {
         await page.waitFor(1500);
         let cloneButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
@@ -193,7 +193,73 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
       })
       console.log('Created Segments')
     }
-    await createSegments();
+    await createSegments();*/
+
+    const populateSegments = async () => {
+      await asyncForEach(htmlFiles, async (el,i) => {
+        console.log(i)
+        let version = el.toString();
+        version = version.replace('index_','').replace('.html','').toUpperCase();
+        // adjust version variable for non-matching cell names
+        switch(version){
+          case 'CN':
+          version = 'China';
+          break;
+          case 'DE':
+          version = 'German';
+          break;
+          case 'ES':
+          version = 'Spanish';
+          break;
+          case 'FR':
+          version = 'France';
+          break;
+          case 'JP':
+          version = 'Japan';
+          break;
+          case 'KO':
+          version = 'Korean';
+          break;
+          case 'MX':
+          version = 'Latin America';
+          break;
+          case 'RU':
+          version = 'Russia';
+          break;
+        }
+        await page.waitFor(1500);
+        let editButton = await page.$x("//td[normalize-space(text())='CMS_"+version+"']/following::td//a").then(function(result){
+          // console.log(result[1])
+          return result[0]
+        });
+        await console.log(editButton)
+
+        await editButton.click();
+        await page.waitForNavigation();
+        await page.waitFor(1000);
+
+        let htmlContent = await fs.readFileSync('./dist/'+el, 'utf-8').toString();
+        let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
+        let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
+
+        await page.waitFor(1500);
+        await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
+        await page.waitFor(1000);
+        await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
+        await page.waitFor(1000);
+        await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
+        await page.waitFor(1000);
+        let saveButton = await page.$('input#buttonEditFlat');
+        await saveButton.click();
+        await page.waitForNavigation();
+        let backButton = await page.$('.pull-left a');
+        await backButton.click();
+        await page.waitForNavigation();
+
+      })
+      console.log('Populate Segments')
+    }
+    await populateSegments();
 
 
     // when done - confirmation messsage and close browser
