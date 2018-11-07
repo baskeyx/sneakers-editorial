@@ -176,11 +176,13 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
 */
     // const startingCell = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
     // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/..");
-    const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/..").then(function(result){//cc[../bb='zz']"
-      console.log(result)
+    const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
+      console.log(result[1])
+      return result[1]
     }); // this works
     await page.waitFor(1000);
-    //await console.log(startingRow)
+    await console.log(startingRow)
+    await startingRow.click();
 
     /*const copyButton = await startingRow.$('a.btn-info').then(function(result){
         console.log(result);
