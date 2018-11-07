@@ -175,7 +175,7 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/.."); // parent
 
     // for each translation, perform deployment routine
-    /*const createSegments = async () => {
+    const createSegments = async () => {
       await asyncForEach(htmlFiles, async (el,i) => {
         await page.waitFor(1500);
         let cloneButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
@@ -193,7 +193,7 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
       })
       console.log('Segments Created.')
     }
-    await createSegments();*/
+    await createSegments();
 
     const populateSegments = async () => {
       await asyncForEach(htmlFiles, async (el,i) => {
@@ -244,8 +244,9 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         await page.waitFor(1000);
 
         let htmlField = await page.$('.CodeMirror-wrap textarea');
+        await htmlField.click();
+        await htmlField.focus();
         await htmlField.type(htmlContent);
-
 
         //await page.type('.CodeMirror-wrap textarea', htmlContent)
        // await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
@@ -277,7 +278,10 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
       let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
       let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
       await page.waitFor(1000);
-      await page.type('.CodeMirror-wrap textarea', htmlContent)
+      let htmlField = await page.$('.CodeMirror-wrap textarea');
+      await htmlField.click();
+      await htmlField.focus();
+      await htmlField.type(htmlContent);
       //await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
       await page.waitFor(1000);
       await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
