@@ -191,16 +191,15 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         await page.click('#versioning-actions-modal-confirm-button');
         await page.waitFor(2000);
       })
-      console.log('Created Segments')
+      console.log('Segments Created.')
     }
     await createSegments();*/
 
     const populateSegments = async () => {
       await asyncForEach(htmlFiles, async (el,i) => {
-        console.log(i)
         let version = el.toString();
         version = version.replace('index_','').replace('.html','').toUpperCase();
-        // adjust version variable for non-matching cell names
+        // adjust version variable for non-matching cell names to match CMS
         switch(version){
           case 'CN':
           version = 'China';
@@ -232,7 +231,7 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
           // console.log(result[1])
           return result[0]
         });
-        await console.log(editButton)
+        await console.log('Poulating CMS_'+version+'......')
 
         await editButton.click();
         await page.waitForNavigation();
@@ -242,8 +241,14 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
         let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
 
-        await page.waitFor(1500);
-        await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
+        await page.waitFor(1000);
+
+        let htmlField = await page.$('.CodeMirror-wrap textarea');
+        await htmlField.type(htmlContent);
+
+
+        //await page.type('.CodeMirror-wrap textarea', htmlContent)
+       // await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
         await page.waitFor(1000);
         await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
         await page.waitFor(1000);
@@ -257,7 +262,36 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         await page.waitForNavigation();
 
       })
-      console.log('Populate Segments')
+
+      // add US content, same as EN
+      await page.waitFor(1000);
+      await console.log('Poulating CMS_US......')
+      let editButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
+          // console.log(result[1])
+          return result[0]
+        });
+      await editButton.click();
+      await page.waitForNavigation();
+      await page.waitFor(1000);
+      let htmlContent = await fs.readFileSync('./dist/index_en.html', 'utf-8').toString();
+      let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
+      let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
+      await page.waitFor(1000);
+      await page.type('.CodeMirror-wrap textarea', htmlContent)
+      //await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
+      await page.waitFor(1000);
+      await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
+      await page.waitFor(1000);
+      await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
+      await page.waitFor(1000);
+      let saveButton = await page.$('input#buttonEditFlat');
+      await saveButton.click();
+      await page.waitForNavigation();
+      let backButton = await page.$('.pull-left a');
+      await backButton.click();
+      await page.waitForNavigation();
+
+      console.log('Segments Populated!')
     }
     await populateSegments();
 
@@ -266,8 +300,8 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     // await browser.close();
 
     // exit terminal process
-    /*await done();
-    await process.exit(0);*/
+    await done();
+    await process.exit(0);
 
   })();
 
