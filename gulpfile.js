@@ -144,6 +144,12 @@ function getElementsByText(str, tag = 'a') {
   return Array.prototype.slice.call(document.getElementsByTagName(tag)).filter(el => el.textContent.trim() === str.trim());
 }
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
+
 gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','assets','javascript','sass')),function(done){
 
   var cssFile = './dist/css/global.css';
@@ -165,58 +171,30 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     await page.click('.FF-button');
     await page.waitFor(3000);
 
-
-    /*const rows = await page.evaluate(() => Array.from(document.querySelectorAll('[data-tstid="content-segment-description"]')));*/
-
-   /* let rows = await page.$$eval('[data-tstid="content-segment-description"]');
-    for (let row in rows){
-      let text = await page.evaluate(el => el.textContent, row)
-      console.log(text)
-    }
-*/
     // const startingCell = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
-    // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/..");
-    const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
-      console.log(result[1])
-      return result[1]
-    }); // this works
-    await page.waitFor(1000);
-    await console.log(startingRow)
-    await startingRow.click();
+    // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/.."); // parent
 
-    /*const copyButton = await startingRow.$('a.btn-info').then(function(result){
-        console.log(result);
-        result.click();
-      }).catch( e => {
-        console.log('XPath Error', e)
-      });
-    await page.waitFor(1000);*/
-
-
-    // await console.log(rows[0])
-
-    /*await rows.forEach(function(el){
-      if (el.innerText === 'CMS_US') {
-        console.log(el.innerText)
-      }
-    })*/
-
-
-
-    // on deployment page, after login
-
-    await htmlFiles.forEach(function(el){
-      (async () => {
-        // for each translation, perform deployment routine
-        var version = el.toString();
-        version = version.replace('index_','').replace('.html','');
+    // for each translation, perform deployment routine
+    const createSegments = async () => {
+      await asyncForEach(htmlFiles, async (el,i) => {
+        await page.waitFor(1500);
+        let cloneButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
+          // console.log(result[1])
+          return result[1]
+        });
+        let version = el.toString();
+        version = version.replace('index_','').replace('.html','').toUpperCase();
+        await cloneButton.click();
         await page.waitFor(2000);
-
-
-
+        await page.select('#TargetContentZone', version)
+        await page.waitFor(1000);
+        await page.click('#versioning-actions-modal-confirm-button');
+        await page.waitFor(2000);
       })
+      console.log('Created Segments')
+    }
+    await createSegments();
 
-    })
 
     // when done - confirmation messsage and close browser
     // await browser.close();
