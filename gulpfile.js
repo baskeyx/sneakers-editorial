@@ -247,8 +247,6 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         await htmlField.click();
         await htmlField.focus();
         await htmlField.type(htmlContent);
-
-        //await page.type('.CodeMirror-wrap textarea', htmlContent)
        // await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
         await page.waitFor(1000);
         await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
