@@ -42,7 +42,12 @@ CategorySingleFeed.prototype.buildItem = function($product) {
     var itemLink = document.createElement('a');
     itemLink.className = 'itemLink bold';
     itemLink.innerHTML = self.$ctaText;
-    itemLink.href = self.$feedUrl.replace('?format=json','').replace('&format=json','') + '?from=sneakers-editorial';
+    itemLink.href = self.$feedUrl.replace('?format=json','').replace('&format=json','');
+    if (itemLink.href.indexOf('?') > -1) {
+        itemLink.href = itemLink.href + '&from=sneakers-editorial'
+    } else {
+        itemLink.href = itemLink.href + '?from=sneakers-editorial'
+    }
     itemLink.dataset.ffref = 'sneakerseditorial';
     itemContentHolder.append(itemLink);
 

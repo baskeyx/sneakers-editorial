@@ -82,7 +82,12 @@ SliderFeed.prototype.initSwiper = function($items){
         var itemLink = document.createElement('a');
         itemLink.className = 'itemLink bold';
         itemLink.innerHTML = self.$ctaText;
-        itemLink.href = item.ProductUrl + '?from=sneakers-editorial';
+        itemLink.href = item.ProductUrl;
+        if (itemLink.href.indexOf('?') > -1) {
+            itemLink.href = itemLink.href + '&from=sneakers-editorial'
+        } else {
+            itemLink.href = itemLink.href + '?from=sneakers-editorial'
+        }
         itemLink.dataset.ffref = 'sneakerseditorial';
         slide.append(itemLink);
 
