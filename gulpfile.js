@@ -171,15 +171,12 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     await page.click('.FF-button');
     await page.waitFor(3000);
 
-    // const startingCell = await page.$x('//*[text()[contains(., "CMS_US")]]'); // this works
-    // const startingRow = await page.$x("//td[normalize-space(text())='CMS_US']/.."); // parent
-
     // for each translation, perform deployment routine
     const createSegments = async () => {
       await asyncForEach(htmlFiles, async (el,i) => {
         await page.waitFor(1500);
         let cloneButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
-          // console.log(result[1])
+          // copy button
           return result[1]
         });
         let version = el.toString();
@@ -228,31 +225,27 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
         }
         await page.waitFor(1500);
         let editButton = await page.$x("//td[normalize-space(text())='CMS_"+version+"']/following::td//a").then(function(result){
-          // console.log(result[1])
+          // edit button
           return result[0]
         });
         await console.log('Poulating CMS_'+version+'......')
-
         await editButton.click();
         await page.waitForNavigation();
-        await page.waitFor(1000);
-
         let htmlContent = await fs.readFileSync('./dist/'+el, 'utf-8').toString();
         let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
         let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
-
         await page.waitFor(1000);
-
-        let htmlField = await page.$('.CodeMirror-wrap textarea');
-        await htmlField.click();
-        await htmlField.focus();
-        await htmlField.type(htmlContent);
-       // await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
-        await page.waitFor(1000);
+        await page.$eval('#codemirror-content-html', (el,value) => {
+            let dom = document.querySelector('#codemirror-content-html');
+            let parent = dom.parentNode;
+            parent.removeChild(dom);
+            let htmlField = document.createElement('textarea');
+            parent.appendChild(htmlField);
+            htmlField.name = 'HtmlContent';
+            htmlField.value = value
+        }, htmlContent);
         await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
-        await page.waitFor(1000);
         await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
-        await page.waitFor(1000);
         let saveButton = await page.$('input#buttonEditFlat');
         await saveButton.click();
         await page.waitForNavigation();
@@ -266,26 +259,26 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
       await page.waitFor(1000);
       await console.log('Poulating CMS_US......')
       let editButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
-          // console.log(result[1])
+          // edit button
           return result[0]
         });
       await editButton.click();
       await page.waitForNavigation();
-      await page.waitFor(1000);
       let htmlContent = await fs.readFileSync('./dist/index_en.html', 'utf-8').toString();
       let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
       let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
       await page.waitFor(1000);
-      let htmlField = await page.$('.CodeMirror-wrap textarea');
-      await htmlField.click();
-      await htmlField.focus();
-      await htmlField.type(htmlContent);
-      //await page.$eval('#codemirror-content-html', (el, value) => el.value = value, htmlContent);
-      await page.waitFor(1000);
+      await page.$eval('#codemirror-content-html', (el,value) => {
+          let dom = document.querySelector('#codemirror-content-html');
+          let parent = dom.parentNode;
+          parent.removeChild(dom);
+          let htmlField = document.createElement('textarea');
+          parent.appendChild(htmlField);
+          htmlField.name = 'HtmlContent';
+          htmlField.value = value
+      }, htmlContent);
       await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
-      await page.waitFor(1000);
       await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
-      await page.waitFor(1000);
       let saveButton = await page.$('input#buttonEditFlat');
       await saveButton.click();
       await page.waitForNavigation();
@@ -297,15 +290,138 @@ gulp.task('deploy', gulp.series( gulp.series('clean', gulp.series('html-dist','a
     }
     await populateSegments();
 
-
-    // when done - confirmation messsage and close browser
-    // await browser.close();
-
     // exit terminal process
     await done();
     await process.exit(0);
 
   })();
 
+}));
+
+// update build
+gulp.task('deploy-update', gulp.series( gulp.series('clean', gulp.series('html-dist','assets','javascript','sass')),function(done){
+
+  var cssFile = './dist/css/global.css';
+  var jsFile = './dist/js/main.js';
+  var htmlFiles = getFilesFromPath('./dist', '.html')
+  var CREDS = require('./deploy_creds');
+
+  (async () => {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.goto(CREDS.deploy_url);
+    await page.waitFor(2000);
+
+    // login
+    await page.click('#username');
+    await page.keyboard.type(CREDS.username);
+    await page.click('#password');
+    await page.keyboard.type(CREDS.password);
+    await page.click('.FF-button');
+    await page.waitFor(3000);
+
+    const populateSegments = async () => {
+      await asyncForEach(htmlFiles, async (el,i) => {
+        let version = el.toString();
+        version = version.replace('index_','').replace('.html','').toUpperCase();
+        // adjust version variable for non-matching cell names to match CMS
+        switch(version){
+          case 'CN':
+          version = 'China';
+          break;
+          case 'DE':
+          version = 'German';
+          break;
+          case 'ES':
+          version = 'Spanish';
+          break;
+          case 'FR':
+          version = 'France';
+          break;
+          case 'JP':
+          version = 'Japan';
+          break;
+          case 'KO':
+          version = 'Korean';
+          break;
+          case 'MX':
+          version = 'Latin America';
+          break;
+          case 'RU':
+          version = 'Russia';
+          break;
+        }
+        await page.waitFor(1500);
+        let editButton = await page.$x("//td[normalize-space(text())='CMS_"+version+"']/following::td//a").then(function(result){
+          // edit button
+          return result[0]
+        });
+        await console.log('Poulating CMS_'+version+'......')
+        await editButton.click();
+        await page.waitForNavigation();
+        let htmlContent = await fs.readFileSync('./dist/'+el, 'utf-8').toString();
+        let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
+        let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
+        await page.waitFor(1000);
+        await page.$eval('#codemirror-content-html', (el,value) => {
+            let dom = document.querySelector('#codemirror-content-html');
+            let parent = dom.parentNode;
+            parent.removeChild(dom);
+            let htmlField = document.createElement('textarea');
+            parent.appendChild(htmlField);
+            htmlField.name = 'HtmlContent';
+            htmlField.value = value
+        }, htmlContent);
+        await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
+        await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
+        let saveButton = await page.$('input#buttonEditFlat');
+        await saveButton.click();
+        await page.waitForNavigation();
+        let backButton = await page.$('.pull-left a');
+        await backButton.click();
+        await page.waitForNavigation();
+
+      })
+
+      // add US content, same as EN
+      await page.waitFor(1000);
+      await console.log('Poulating CMS_US......')
+      let editButton = await page.$x("//td[normalize-space(text())='CMS_US']/following::td//a").then(function(result){
+          // edit button
+          return result[0]
+        });
+      await editButton.click();
+      await page.waitForNavigation();
+      let htmlContent = await fs.readFileSync('./dist/index_en.html', 'utf-8').toString();
+      let cssContent = await fs.readFileSync('./dist/css/global.css', 'utf-8').toString();
+      let jsContent = await fs.readFileSync('./dist/js/main.js', 'utf-8').toString();
+      await page.waitFor(1000);
+      await page.$eval('#codemirror-content-html', (el,value) => {
+          let dom = document.querySelector('#codemirror-content-html');
+          let parent = dom.parentNode;
+          parent.removeChild(dom);
+          let htmlField = document.createElement('textarea');
+          parent.appendChild(htmlField);
+          htmlField.name = 'HtmlContent';
+          htmlField.value = value
+      }, htmlContent);
+      await page.$eval('#codemirror-content-css', (el, value) => el.value = value, cssContent);
+      await page.$eval('#codemirror-content-js', (el, value) => el.value = value, jsContent);
+      let saveButton = await page.$('input#buttonEditFlat');
+      await saveButton.click();
+      await page.waitForNavigation();
+      let backButton = await page.$('.pull-left a');
+      await backButton.click();
+      await page.waitForNavigation();
+
+      console.log('Segments Populated!')
+    }
+    await populateSegments();
+
+    // exit terminal process
+    await done();
+    await process.exit(0);
+
+  })();
 
 }));
