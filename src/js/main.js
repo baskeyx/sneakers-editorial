@@ -38,4 +38,9 @@ window.CategorySingleFeed = require('./_modules/categorySingleFeed');
             new CategorySingleFeed(categoryFeeds[i]);
         }
     }
+
+    // set bg image on hero
+    var heroImage = document.querySelectorAll('.ed--module-hero-image')[0];
+    var heroImageUrl = heroImage.dataset.bgimage;
+    heroImage.style.backgroundImage = 'url('+heroImageUrl+')';
 })();

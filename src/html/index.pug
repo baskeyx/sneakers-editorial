@@ -2,7 +2,7 @@ main.ed--main
     //- Hero
     section.ed--module.ed--module-hero
         .col.right-col
-            .ed--module-hero-image(style='background-image:url('+`${assetPath}`+'sneaker-slower.gif);')
+            .ed--module-hero-image(data-bgimage=`${assetPath}`+'sneaker-slower.gif')
         .col.left-col
             .title
                 h1.bold.center !{hero_title}
@@ -43,7 +43,7 @@ main.ed--main
             h2.sectionTitle.center !{shop_designer_title}
         .desc
             p !{shop_designer_desc}
-        .ed--module-slider-holder(data-itemcta=`${cta_style}` data-includedesc="no" data-feed='["'+`${feedPath}`+'/shopping/women/designer-swear/items.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/dorateymur-custom-styles.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/customizable-NK-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/sergio-rossi-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/toga-pulla-women.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/paul-andrew-women-custom-styles.aspx?format=json'+'", "'+`${feedPath}`+'/sets/women/emilio-pucci-cityup-sneakers.aspx?format=json'+'"]')
+        .ed--module-slider-holder(data-itemcta=`${cta_style}` data-includedesc="no" data-feed!=''+`${feedPath}`+'/shopping/women/designer-swear/items.aspx?format=json'+', '+`${feedPath}`+'/sets/women/dorateymur-custom-styles.aspx?format=json'+', '+`${feedPath}`+'/sets/women/customizable-NK-women.aspx?format=json'+', '+`${feedPath}`+'/sets/women/sergio-rossi-women.aspx?format=json'+', '+`${feedPath}`+'/sets/women/toga-pulla-women.aspx?format=json'+', '+`${feedPath}`+'/sets/women/paul-andrew-women-custom-styles.aspx?format=json'+', '+`${feedPath}`+'/sets/women/emilio-pucci-cityup-sneakers.aspx?format=json'+'')
         .swiper-container
             .swiper-wrapper
             .swiper-pagination

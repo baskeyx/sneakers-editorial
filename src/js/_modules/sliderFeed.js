@@ -15,10 +15,11 @@ var SliderFeed = function($target) {
     self.$swiperContainer = self.$el.querySelector('.swiper-container');
     self.$slidesHolder = self.$el.querySelector('.swiper-wrapper');
     self.$products = [];
+    self.feedArray = [];
 
     if (self.$el.classList.contains('multiFeed')){
         // if it's multifeed and an array of feeds has been set
-        self.feedArray = JSON.parse(self.$feedUrl);
+        self.feedArray = self.$feedUrl.split(',');
         self.feedArray.forEach(function(itemUrl,i){
             getFeed(itemUrl).then(function(response) {
                 var item = response.Products.List.slice(0,1);
